@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/index}">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <title>Dashboard | Dason - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description"/>
+    <meta content="Themesbrand" name="author"/>
+    <!-- App favicon -->
+    <link rel="shortcut icon" th:href="@{/admin/assets/images/favicon.ico}">
+
+    <!-- plugin css -->
+    <link th:href="@{/admin/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css}" rel="stylesheet"
+          type="text/css"/>
+
+    <!-- preloader css -->
+    <link rel="stylesheet" th:href="@{/admin/assets/css/preloader.min.css}" type="text/css"/>
+
+    <!-- Bootstrap Css -->
+    <!-- Icons Css -->
+    <link th:href="@{/admin/assets/css/icons.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- App Css-->
+    <link th:href="@{/admin/assets/css/app.min.css}" id="app-style" rel="stylesheet" type="text/css"/>
+    <!--  -->
+    <!-- select2 css -->
+    <link th:href="@{/admin/assets/libs/select2/css/select2.min.css}" rel="stylesheet" type="text/css"/>
+
+    <!-- dropzone css -->
+    <link th:href="@{/admin/assets/libs/dropzone/min/dropzone.min.css}" rel="stylesheet" type="text/css"/>
+
+    <!-- preloader css -->
+    <link rel="stylesheet" th:href="@{/admin/assets/css/preloader.min.css}" type="text/css"/>
+
+    <!-- Bootstrap Css -->
+    <link th:href="@{/admin/assets/css/bootstrap.min.css}" id="bootstrap-style" rel="stylesheet" type="text/css"/>
+    <!-- Icons Css -->
+    <link th:href="@{/admin/assets/css/icons.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- App Css-->
+</head>
+
+<body data-topbar="dark">
+
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content" layout:fragment="content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18"></h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                                <li class="breadcrumb-item active">Add Product</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <form th:action="@{${action}}" th:object="${khuyenMai}" method="post">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <!-- <h4 class="card-title">Basic Information</h4>
+                                <p class="card-title-desc">Fill all information below</p> -->
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="productname">Tên Khuyến Mại</label>
+                                            <input th:field="*{ten}" id="productname" name="productname" type="text"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="control-label">Loại Giảm</label>
+                                            <select th:field="*{loai}" class="form-control select2">
+<!--                                                <option>Select</option>-->
+                                                <option value="PHAN TRAM">Phần Trăm</option>
+                                                <option value="TIEN">Tiền</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="manufacturername">Mức Giảm</label>
+                                            <input th:field="*{mucGiam}" id="manufacturername" name="manufacturername"
+                                                   type="text"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label class="control-label">Ngày Bắt Đầu</label>
+                                            <input th:field="*{ngayBatDau}" type="date" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="control-label">Ngày Kết Thúc</label>
+                                            <input th:field="*{ngayKetThuc}" id="manufacturername"
+                                                   name="manufacturername" type="date"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="control-label">Trạng Thái</label>
+                                            <select class="form-control select2">
+                                                <option>Select</option>
+                                                <option th:value="1">Áp Dụng</option>
+                                                <option th:value="0">Hết Hạn</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save
+                                        Changes
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-secondary waves-effect waves-light">Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title mb-0">Sản Phẩm Áp Dụng</h4>
+                            </div>
+                            <div class="card-body">
+                                <table id="datatable"
+                                       class="table table-striped table-hover dt-responsive  nowrap w-100">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Tên</th>
+                                        <th>Danh Mục</th>
+                                        <th>Màu</th>
+                                        <th>Chất Liệu</th>
+                                        <th>Giá Nhập</th>
+                                        <th>Giá Bán</th>
+                                        <th>Số Lượng</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="sp : ${sanPham}">
+
+                                        <td >
+                                            <input th:checked="${#lists.contains(sp1, sp.ma)}" type="checkbox" name="ids" th:value="${sp.ma}">
+                                        </td>
+                                        <td th:text="${sp.ten}"></td>
+                                        <td>Danh muc</td>
+                                        <td>Màu mè</td>
+                                        <td>Chat lieu</td>
+                                        <td th:text="${sp.giaNhap}"></td>
+                                        <td th:text="${sp.giaBan}"></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div> <!-- end card-->
+                    </div>
+                </form>
+            </div>
+            <!-- end row -->
+
+        </div>
+
+        <!-- container-fluid -->
+    </div>
+
+    <!-- End Page-content -->
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script>
+                    © Dason.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end d-none d-sm-block">
+                        Design & Develop by <a href="#!" class="text-decoration-underline">Themesbrand</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- end main content-->
+<!-- JAVASCRIPT -->
+<script th:src="@{/admin/assets/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/admin/assets/libs/metismenu/metisMenu.min.js}"></script>
+<script th:src="@{/admin/assets/libs/simplebar/simplebar.min.js}"></script>
+<script th:src="@{/admin/assets/libs/node-waves/waves.min.js}"></script>
+<script th:src="@{/admin/assets/libs/feather-icons/feather.min.js}"></script>
+<!-- pace js} -->
+<script th:src="@{/admin/assets/libs/pace-js/pace.min.js}"></script>
+
+<!-- apexcharts -->
+<script th:src="@{/admin/assets/libs/apexcharts/apexcharts.min.js}"></script>
+
+<!-- Plugins js}-->
+<script th:src="@{/admin/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js}"></script>
+<script th:src="@{/admin/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js}"></script>
+<!-- dashboard init -->
+<script th:src="@{/admin/assets/js/pages/dashboard.init.js}"></script>
+
+<script th:src="@{/admin/assets/js/app.js}"></script>
+
+<!-- select 2 plugin -->
+<script th:src="@{/admin/assets/libs/select2/js/select2.min.js}"></script>
+
+<!-- dropzone plugin -->
+<script th:src="@{/admin/assets/libs/dropzone/min/dropzone.min.js}"></script>
+
+<!-- init js} -->
+<script th:src="@{/admin/assets/js/pages/ecommerce-select2.init.js}"></script>
+
+<script th:src="@{/admin/assets/js/app.js}"></script>
+
+</body>
+
+</html>
