@@ -42,6 +42,7 @@ public class SizeServiceImpl implements ISizeService {
 
     @Override
     public void deleteById(Float s) {
+        System.out.println(s);
         sizeRepository.deleteById(s);
     }
 

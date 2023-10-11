@@ -8,17 +8,12 @@ import com.example.shoppingweb.model.AnhModel;
 import com.example.shoppingweb.model.SanPhamModel;
 import com.example.shoppingweb.repository.ISanPhamRepository;
 import com.example.shoppingweb.service.ISanPhamService;
-import com.example.shoppingweb.util.ProductUtil;
+import com.example.shoppingweb.util.ImgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,7 +73,7 @@ public class SanPhamServiceImpl implements ISanPhamService {
 
     @Override
     public SanPhamDtoResponse update(SanPhamDtoRequest entity) throws IOException {
-        ProductUtil.deleteImg(findDtoRequetsByMa(entity.getMa()).getAnh());
+//        ImgUtil.deleteImg(findDtoRequetsByMa(entity.getMa()).getAnh(),"product");
 
         SanPhamModel model = entity.mapToModel();
         anhService.deleteBySanPham(model);
@@ -98,7 +93,7 @@ public class SanPhamServiceImpl implements ISanPhamService {
 
         SanPhamModel model = sanPhamRepository.findById(s).get();
         Boolean checkCTSPInSanPham = model.getCtsp().stream().allMatch(c -> c.kiemTraCoTrongDonHang() == false);
-        ProductUtil.deleteImg(model.getImages().stream().map(img -> img.getTen()).collect(Collectors.toList()));
+        ImgUtil.deleteImg(model.getImages().stream().map(img -> img.getTen()).collect(Collectors.toList()),"product");
         if (model.getCtsp().size() == 0 || checkCTSPInSanPham == true) {
             anhService.deleteBySanPham(model);
             sanPhamRepository.deleteById(s);

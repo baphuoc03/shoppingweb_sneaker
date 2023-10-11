@@ -46,24 +46,24 @@ app.controller('ctrl', function ($scope, $http) {
         });
     }
 
-    // $scope.getPropertiesInFilter = function (){
-    //     $http.get("/admin/mau-sac/find-all").then(r =>{
-    //         $scope.mauSac = r.data;
-    //     }).catch( e => console.log(e))
-    //
-    //     $http.get("/admin/chat-lieu/find-all").then(r =>{
-    //         $scope.chatLieu = r.data;
-    //     }).catch( e => console.log(e))
-    //
-    //     $http.get("/admin/dong-san-pham/find-all").then(r =>{
-    //         $scope.dongSP = r.data;
-    //     }).catch( e => console.log(e))
-    //
-    //     $http.get("/kieu-dang/find-all").then(r =>{
-    //         $scope.kieuDang = r.data;
-    //     }).catch( e => console.log(e))
-    // }
-    // $scope.getPropertiesInFilter();
+    $scope.getPropertiesInFilter = function (){
+        $http.get("/admin/mau-sac/find-all").then(r =>{
+            $scope.mauSac = r.data;
+        }).catch( e => console.log(e))
+
+        $http.get("/admin/chat-lieu/find-all").then(r =>{
+            $scope.chatLieu = r.data;
+        }).catch( e => console.log(e))
+
+        $http.get("/admin/dong-san-pham/find-all").then(r =>{
+            $scope.dongSP = r.data;
+        }).catch( e => console.log(e))
+
+        $http.get("/kieu-dang/find-all").then(r =>{
+            $scope.kieuDang = r.data;
+        }).catch( e => console.log(e))
+    }
+    $scope.getPropertiesInFilter();
 
     $scope.filter = function (){
         console.log($scope.filterData)

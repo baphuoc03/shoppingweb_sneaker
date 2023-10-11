@@ -44,40 +44,20 @@ app.controller('chiTietSP-ctrl', function ($scope, $http) {
 
         let data =[];
         let sizesInForm = $scope.form.sizes
+        if(sizesInForm == undefined) sizesInForm = [];
 
-
-        if(sizesInForm == undefined){
-            document.getElementById("eSize").innerText = "Vui lòng chọn size"
-            return
-        }else if($scope.form.soLuong == undefined){
-            document.getElementById("eSoLuong").innerText = "Vui lòng chọn điền số lượng"
-            return
-        }else if($scope.form.soLuong < 0){
-            document.getElementById("eSoLuong").innerText = "Số lượng phải >= 0 "
-            return
-        }
-
-        if(confirm("Thêm "+sizesInForm.length+" chi tiết sản phẩm ?")){
-            for (let i = 0 ;i< sizesInForm.length;i++){
-                $scope.form.size = sizesInForm[i]
-                data.push({
-                    sanPham : idSP,
-                    size : sizesInForm[i],
-                    soLuong : $scope.form.soLuong
-                })
-            }
-            console.log(data)
-
-            $http.post("/admin/san-pham/"+idSP+"/add?soLuong="+$scope.form.soLuong,data).then(r =>{
+            $http.post("/admin/san-pham/"+idSP+"/add?sizes="+sizesInForm,{
+                soLuong : $scope.form.soLuong
+            }).then(r =>{
                 $scope.removeSizeInForm(sizesInForm);
                 $scope.items = $scope.items.concat(r.data);
                 $scope.form.soLuong = ""
                 alert("Thêm thành công "+sizesInForm.length+" chi tiết sản phẩm")
             }).catch(e => {
-                alert("Thêm thất bại!!!!")
+                document.getElementById("eSize").innerText = e.data.eSize == undefined ? "" : e.data.eSize
+                document.getElementById("eSoLuong").innerText =  e.data.soLuong
                 console.log(e)
             })
-        }
     }
 
     //Xóa
@@ -100,17 +80,7 @@ app.controller('chiTietSP-ctrl', function ($scope, $http) {
         $scope.itemUpdate = angular.copy(item)
         console.log($scope.itemUpdate)
     }
-    // $('#myModal').modal({
-    //     keyboard: false
-    // })
     $scope.update = function (){
-        // if($scope.itemUpdate.soLuong == undefined){
-        //     document.getElementById("eSoLuongUpdate").innerText = "Vui lòng chọn điền số lượng"
-        //     return
-        // }else if($scope.itemUpdate.soLuong < 0){
-        //     document.getElementById("eSoLuongUpdate").innerText = "Số lượng phải >= 0 "
-        //     return
-        // }
         if(confirm("Cập nhật chi tiết sản phẩm size "+$scope.itemUpdate.size+" ?")){
             // $scope.itemUpdate.sanPham = idSP
             $http.put("/admin/san-pham/"+idSP+"/update",$scope.itemUpdate).then(r =>{
@@ -146,8 +116,19 @@ app.controller('chiTietSP-ctrl', function ($scope, $http) {
     $scope.removeER = function (id){
         document.getElementById(id).innerText = "";
     }
+
+    $scope.selectAllSize = function (){
+        let elm = document.getElementById("sizeSL")
+        if(elm.selectedIndex == 0) {
+            elm.options[0].selected = false;
+            console.log(elm.options[0].selected)
+            for (let i = 0; i < elm.options.length; i++) {
+                elm.options[i].selected = true;
+            }
+        }
+    }
 });
-$( '#multiple-select-clear-field' ).select2( {
+$( '#sizeSL' ).select2( {
     theme: "bootstrap-5",
     width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
     placeholder: $( this ).data( 'placeholder' ),

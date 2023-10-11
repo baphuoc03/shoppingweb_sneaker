@@ -6,7 +6,6 @@ import com.example.shoppingweb.model.ChiTietSanPhamModel;
 import com.example.shoppingweb.repository.IChiTietSanPhamRepository;
 import com.example.shoppingweb.service.IChiTietSanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -76,7 +75,13 @@ public class ChiTietSanPhamService implements IChiTietSanPhamService {
     }
 
     @Override
-    public List<ChiTietSanPhamDtoResponse> saveAll(List<ChiTietSanPhamDtoRequest> etitys){
+    public List<ChiTietSanPhamDtoResponse> saveAll(List<Float> sizes,ChiTietSanPhamDtoRequest model){
+
+        List<ChiTietSanPhamDtoRequest> etitys = sizes.stream().map(s -> {
+            model.setSize(s);
+            return model;
+        }).collect(Collectors.toList());
+
         return etitys.stream().map(e -> save(e)).collect(Collectors.toList());
     }
 

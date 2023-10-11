@@ -5,27 +5,23 @@ import com.example.shoppingweb.dto.request.ChiTietSanPhamDtoRequest;
 import com.example.shoppingweb.model.SizeModel;
 import com.example.shoppingweb.service.IChiTietSanPhamService;
 import com.example.shoppingweb.util.ValidateUtil;
-import com.example.shoppingweb.repository.sizerepo;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
+import com.example.shoppingweb.repository.sizerepo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("${admin.domain}/san-pham/{maSP}")
 public class ChiTietSanPhamRestController {
 
     @Autowired
-    private sizerepo sizerepo ;
+    private sizerepo sizerepo;
     @Autowired
     private IChiTietSanPhamService sanPhamService;
 
@@ -45,13 +41,19 @@ public class ChiTietSanPhamRestController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> add(@RequestParam("soLuong")Long soLuong, @RequestBody List<ChiTietSanPhamDtoRequest> models){
-        if(soLuong<0){
-            Map<String, String> body = new HashMap<>();
-            body.put("message", "Số lượng phải >= 0");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.valueOf("application/json")).body(body);
+    public ResponseEntity<?> add(@Valid @RequestBody ChiTietSanPhamDtoRequest model,
+                                 BindingResult result,
+                                 @PathVariable("maSP")String maSP,
+                                 @RequestParam("sizes")List<Float> size){
+        if(size.size()==0){
+            result.addError(new FieldError("eSize","eSize","Vui lòng chọn size"));
+            if(!result.hasErrors()) ValidateUtil.getErrors(result);
         }
-        return ResponseEntity.ok(chiTietSanPhamService.saveAll(models));
+        if(result.hasErrors()){
+            return ValidateUtil.getErrors(result);
+        }
+        model.setSanPham(maSP);
+        return ResponseEntity.ok(chiTietSanPhamService.saveAll(size,model));
     }
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")String id){

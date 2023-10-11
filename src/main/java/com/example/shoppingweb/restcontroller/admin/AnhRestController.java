@@ -13,13 +13,18 @@ import java.nio.file.Files;
 @RequestMapping("image")
 public class AnhRestController {
 
-    private final String resource = "src/main/resources/static/admin/images/";
 
-    @GetMapping("/loadImage/{imgName}")
+    @GetMapping("/loadImage/{forder}/{imgName}")
     @ResponseBody
-    public ResponseEntity<?> downloadFile(@PathVariable("imgName") String imgName) throws IOException {
+    public ResponseEntity<?> downloadFile(@PathVariable("forder") String forder,
+                                          @PathVariable("imgName") String imgName) throws IOException {
 
-        byte[] ima = Files.readAllBytes(new File(resource+imgName).toPath());
+        byte[] ima;
+        try{
+            ima = Files.readAllBytes(new File("src/main/resources/images/"+forder+"/"+imgName).toPath());
+        }catch (Exception e){
+            ima = Files.readAllBytes(new File("src/main/resources/images/"+forder+"/default.png").toPath());
+        }
         ByteArrayResource byteArrayResource = new ByteArrayResource(ima);
         return ResponseEntity.ok()
                 .contentType(MediaType.valueOf("image/png"))

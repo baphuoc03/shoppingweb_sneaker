@@ -19,7 +19,8 @@ public interface IChiTietSanPhamService {
 
     void delete(String id);
 
-    List<ChiTietSanPhamDtoResponse> saveAll(List<ChiTietSanPhamDtoRequest> etitys);
+
+    List<ChiTietSanPhamDtoResponse> saveAll(List<Float> sizes, ChiTietSanPhamDtoRequest model);
 
     Boolean existsById(String id);
 }

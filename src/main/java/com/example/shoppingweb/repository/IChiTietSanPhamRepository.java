@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface IChiTietSanPhamRepository extends JpaRepository<ChiTietSanPhamModel,String> {
-    List<ChiTietSanPhamModel> getAllBySanPhamMaAndTrangThaiOrderBySizeMa(String maSP,Boolean trangThai);
+    List<ChiTietSanPhamModel> getAllBySanPhamMaAndTrangThaiOrderBySizeMa(String maSP, Boolean trangThai);
 
     @Transactional
     @Modifying

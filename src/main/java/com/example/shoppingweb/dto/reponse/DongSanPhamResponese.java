@@ -12,13 +12,22 @@ import java.util.Date;
 @Data
 public class DongSanPhamResponese {
     private String id;
+    private String idThuongHieu;
     private String ten;
+    private String thuongHieu;
     private Date ngayTao;
     private Date ngayCapNhat;
+
+    public DongSanPhamResponese(String id, String ten) {
+        this.id = id;
+        this.ten = ten;
+    }
 
     public DongSanPhamResponese(DongSanPhamModel model){
         id = model.getId();
         ten = model.getTen();
+        thuongHieu = model.getThuongHieu() == null?"": model.getThuongHieu().getTen();
+        idThuongHieu = model.getThuongHieu() == null?"": model.getThuongHieu().getId();
         ngayTao = model.getNgayTao();
         ngayCapNhat = model.getNgayCapNhat();
     }

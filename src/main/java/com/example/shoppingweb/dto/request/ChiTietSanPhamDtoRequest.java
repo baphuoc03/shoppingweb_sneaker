@@ -3,14 +3,12 @@ package com.example.shoppingweb.dto.request;
 import com.example.shoppingweb.model.ChiTietSanPhamModel;
 import com.example.shoppingweb.model.SanPhamModel;
 import com.example.shoppingweb.model.SizeModel;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -7,7 +7,8 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
@@ -28,9 +29,11 @@ public class MauSacModel {
     private String ten;
 
     @Column(name = "ngaytao")
+    @CreationTimestamp
     private Date ngayTao;
 
     @Column(name = "ngaycapnhat")
+    @UpdateTimestamp
     private Date ngayCapNhat;
 
     public MauSacModel(String ma) {

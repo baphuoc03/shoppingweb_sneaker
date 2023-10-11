@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
@@ -28,9 +30,11 @@ public class ChatLieuModel {
     private String ten;
 
     @Column(name = "ngaytao")
+    @CreationTimestamp
     private Date ngayTao;
 
     @Column(name = "ngaycapnhat")
+    @UpdateTimestamp
     private Date ngayCapNhat;
 
     public ChatLieuModel(String id) {

@@ -3,7 +3,6 @@ package com.example.shoppingweb.repository;
 import com.example.shoppingweb.model.AnhModel;
 import com.example.shoppingweb.model.SanPhamModel;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

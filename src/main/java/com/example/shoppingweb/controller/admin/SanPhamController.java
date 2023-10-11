@@ -1,14 +1,13 @@
 package com.example.shoppingweb.controller.admin;
 
-import com.example.shoppingweb.dto.reponse.ChatLieuDTOResponse;
-import com.example.shoppingweb.dto.reponse.DongSanPhamResponese;
-import com.example.shoppingweb.dto.reponse.KieuDangDTOResponse;
-import com.example.shoppingweb.dto.reponse.MauSacDTOResponse;
+import com.example.shoppingweb.dto.reponse.*;
 import com.example.shoppingweb.dto.request.SanPhamDtoRequest;
 import com.example.shoppingweb.service.*;
+import com.example.shoppingweb.service.impl.AnhServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("${admin.domain}/san-pham")
@@ -40,6 +40,12 @@ public class SanPhamController {
     private IChatLieuService chatLieuService;
     @Autowired
     private IKieuDangService kieuDangService;
+    @Autowired
+    private AnhServiceImpl anhService;
+    @Autowired
+    private IThuongHieuService thuongHieuService;
+    @Autowired
+    private IXuatXuService xuatXuService;
 
 
     @GetMapping("")
@@ -57,7 +63,7 @@ public class SanPhamController {
 
     @PostMapping("add")
     public String add(@Valid @ModelAttribute("sanPham") SanPhamDtoRequest sanPham, BindingResult result,
-                      @RequestParam(value = "img",required = false) List<MultipartFile> file) throws IOException {
+                      @RequestParam(value = "pro-image",required = false) List<MultipartFile> file) throws IOException {
 
 
         if (result.hasErrors()) {
@@ -89,16 +95,16 @@ public class SanPhamController {
     @PutMapping("update/{ma}")
     public String update(@Valid @ModelAttribute("sanPham") SanPhamDtoRequest sanPham, BindingResult result,
                          @PathVariable("ma")String ma,
-                         @RequestParam(value = "img",required = false) List<MultipartFile> file) throws IOException {
+                         @RequestParam(value = "pro-image",required = false) List<MultipartFile> file) throws IOException {
 
         if (result.hasErrors()) {
             request.setAttribute("method","put");
             request.setAttribute("action", "update/"+ma);
-            return "/admin/sanPham";
+            return "admin/formSanPham";
         }
 
         sanPham.setMa(ma);
-        sanPham.setAnh(file);
+        sanPham.setAnh(file,anhService.findAllBySanPham(sanPham.mapToModel()).stream().map(img -> img.getTen()).collect(Collectors.toSet()));
         sanPhamService.update(sanPham);
 
         return "redirect:/admin/san-pham";
@@ -122,7 +128,15 @@ public class SanPhamController {
 
     @ModelAttribute("kieuDang")
     public List<KieuDangDTOResponse> getKieuDang(){
-        return kieuDangService.findAll();
+        return kieuDangService.getAll();
+    }
+    @ModelAttribute("thuongHieu")
+    public List<ThuongHieuDtoResponse> getThuongHieu(){
+        return thuongHieuService.findAll();
+    }
+    @ModelAttribute("xuatXu")
+    private List<XuatXuResponse> getXuatXu(){
+        return xuatXuService.findAll();
     }
 
 

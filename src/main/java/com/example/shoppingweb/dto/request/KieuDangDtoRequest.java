@@ -1,6 +1,7 @@
 package com.example.shoppingweb.dto.request;
 
 import com.example.shoppingweb.model.KieuDangModel;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Data
 public class KieuDangDtoRequest {
     private String id;
+    @NotBlank(message = "vui long nhap ten")
     private String ten;
     private Date ngayTao;
     private Date ngayCapNhat;

@@ -1,11 +1,9 @@
 package com.example.shoppingweb.dto.reponse;
 
 import com.example.shoppingweb.model.MauSacModel;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.ui.Model;
 
 import java.util.Date;
 

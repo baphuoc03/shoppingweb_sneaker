@@ -5,13 +5,10 @@ import com.example.shoppingweb.dto.request.MauSacDTORequest;
 import com.example.shoppingweb.model.MauSacModel;
 import com.example.shoppingweb.repository.IMauSacRepository;
 import com.example.shoppingweb.service.IMauSacService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service

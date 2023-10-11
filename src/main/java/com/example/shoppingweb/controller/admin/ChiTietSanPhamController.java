@@ -1,5 +1,5 @@
 package com.example.shoppingweb.controller.admin;
-
+import com.example.shoppingweb.repository.sizerepo;
 import com.example.shoppingweb.service.ISanPhamService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.example.shoppingweb.repository.sizerepo;
 
 @Controller
 @RequestMapping("${admin.domain}/san-pham/{maSP}")

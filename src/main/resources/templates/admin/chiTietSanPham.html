@@ -112,12 +112,9 @@
                                         <div class="d-flex justify-content-center">
                                             <div class="mb-3 col-10 " ng-click="removeER('eSize')">
                                                 <label >Size</label>
-                                                <!--                                        <select class="form-control" data-trigger-->
-                                                <!--                                                name="choices-multiple-default" id="choices-multiple-default"-->
-                                                <!--                                                placeholder="This is a placeholder" multiple>-->
-                                                <!--                                            <option ng-repeat="s in sizes" value="{{s.ma}}">1 {{s.ma}}</option>-->
-                                                <!--                                        </select>-->
-                                                <select class="form-select" ng-model="form.sizes" id="multiple-select-clear-field" data-placeholder="Chọn size" multiple >
+                                                <select class="form-select" ng-model="form.sizes" id="sizeSL" data-placeholder="Chọn size" multiple
+                                                onchange="angular.element(this).scope().selectAllSize()">
+                                                    <option >Chọn tất cả</option>
                                                     <option ng-repeat="s in sizes" value="{{s.ma}}" style="border-bottom: 1px" >{{s.ma}}</option>
                                                 </select>
                                                 <i id="eSize"  class="er"></i>

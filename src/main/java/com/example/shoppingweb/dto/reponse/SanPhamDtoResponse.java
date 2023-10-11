@@ -1,16 +1,13 @@
 package com.example.shoppingweb.dto.reponse;
 
 import com.example.shoppingweb.model.SanPhamModel;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Comparator;
-import java.util.List;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -21,6 +18,7 @@ public class SanPhamDtoResponse {
     private String ten;
     private String mauSac;
     private String dongSanPham;
+    private String xuatXu;
     private String kieuDang;
     private String chatLieu;
     private BigDecimal giaNhap;
@@ -37,6 +35,7 @@ public class SanPhamDtoResponse {
         ten = model.getTen();
         mauSac = model.getMauSac() == null ? "" : model.getMauSac().getTen();
         dongSanPham = model.getDongSanPham()== null ? "" : model.getDongSanPham().getTen();
+        xuatXu = model.getXuatXu() == null ? "" : model.getXuatXu().getTen();
         kieuDang = model.getKieuDang()== null ? "" : model.getKieuDang().getTen();
         chatLieu = model.getChatLieu()== null ? "" : model.getChatLieu().getTen();
         giaNhap = model.getGiaNhap();

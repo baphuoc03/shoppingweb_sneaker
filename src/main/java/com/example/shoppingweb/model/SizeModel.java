@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
@@ -26,9 +28,11 @@ public class SizeModel {
     private Float chieuDai;
 
     @Column(name = "ngaytao")
+    @CreationTimestamp
     private Date ngayTao;
 
     @Column(name = "ngaycapnhat")
+    @UpdateTimestamp
     private Date ngayCapNhat;
 
 }
