@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/index}">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <title>Dashboard | Dason - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description"/>
+    <meta content="Themesbrand" name="author"/>
+
+</head>
+
+<body data-topbar="dark">
+
+<!-- <body data-layout="horizontal"> -->
+
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content" layout:fragment="content">
+    <div ng-app="voucher" ng-controller="voucher-ctrl">
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0 font-size-18">Voucher</h4>
+
+                            <!-- <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">T</a></li>
+                                    <li class="breadcrumb-item active">DataTables</li>
+                                </ol>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#voucher">
+                                            Tạo Voucher
+                                        </button>
+                                    </div>
+                                    <div class="col-6 nav justify-content-end ">
+                                        <form th:action="@{/admin/voucher}" class="d-flex">
+                                            <input class="form-control me-2" name="name" type="text"
+                                                   placeholder="Search">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                        </th>
+                                        <th>Voucher</th>
+                                        <th>Loại Giảm</th>
+                                        <th>Mức Giảm</th>
+                                        <th>Bắt Đầu</th>
+                                        <th>Kết Thúc</th>
+                                        <th>Số lương</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="vc: ${listVoucher}">
+                                        <td><input type="checkbox" ng-model="voucher.selected"
+                                                   ng-change="sumVoucherSelected(voucher)"></td>
+                                        <td th:text="${vc.ten}"></td>
+                                        <td th:text="${vc.loai}"></td>
+                                        <td th:text="${vc.mucGiam}"></td>
+                                        <td th:text="${vc.ngayBatDau}"></td>
+                                        <td th:text="${vc.ngayKetThuc}"></td>
+                                        <td th:text="${vc.soLuong}"></td>
+                                        <td th:text="${vc.soLuong == 0? 'Hết hạn': 'Áp dụng'}"></td>
+                                        <td>
+                                            <a href="" class="edit" data-bs-toggle="modal"
+                                               data-bs-target="#editVoucher"
+                                               th:attr="ng-click='findById(\''+${vc.ma}+'\');'">
+                                                <i class="material-icons" title="Edit">&#xE254;</i>
+                                            </a>
+                                            <a href="" class="delete"
+                                               th:attr="ng-click='delete(\''+${vc.ma}+'\');'">
+                                                <i class="material-icons" title="Delete">&#xE872;</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-6">
+
+                                    </div>
+                                    <div class="col-6">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-end">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                </li>
+                                                <li th:each="pageNumber: ${#numbers.sequence(1, totalPage)}"
+                                                    class="page-item">
+                                                    <a class="page-link"
+                                                       th:text="${pageNumber}"
+                                                       th:if="${name != null and name != ''}"
+                                                       th:href="@{'/admin/voucher?name=' + ${name} +'&pageNumber='+${pageNumber}}"></a>
+                                                    <a class="page-link"
+                                                       th:text="${pageNumber}"
+                                                       th:unless="${name != null and name != ''}"
+                                                       th:href="@{'/admin/voucher?pageNumber='+${pageNumber}}"></a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+            </div>
+
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <script>document.write(new Date().getFullYear())</script>
+                        © Dason.
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end d-none d-sm-block">
+                            Design & Develop by <a href="#!" class="text-decoration-underline">Themesbrand</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- save voucher -->
+        <div class="modal" id="voucher">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Tên Voucher</label>
+                                <input type="text" ng-model="ten" class="form-control">
+                                <p class="form-text text-danger">{{erTen}}</p>
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Loại Giảm</label>
+                                <select class="form-select" id="loaiGiam" ng-model="loai">
+                                    <option value="PHAN TRAM">Phần trăm</option>
+                                    <option value="TIEN">Tiền</option>
+                                </select>
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mức Giảm</label>
+                                <input type="text" ng-model="mucGiam" class="form-control">
+                                <p class="form-text text-danger">{{erMucGiam}}</p>
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3" id="mucGiamToiDa">
+                                <label class="form-label">Mức Giảm Tối Đa</label>
+                                <input type="text" ng-model="mucGiamToiDa" class="form-control">
+                                <p class="form-text text-danger">{{erMucGiamToiDa}}</p>
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Giá Trị Tối Thiểu</label>
+                                <input type="text" ng-model="giaTriToiThieu" class="form-control">
+                                <p class="form-text text-danger">{{erMucGiamToiThieu}}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ngày Bắt Đầu</label>
+                                <input type="date" ng-model="ngayBatDau" class="form-control">
+                                <p class="form-text text-danger">{{erNgayBatDau}}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ngày Kết Thúc</label>
+                                <input type="date" ng-model="ngayKetThuc" class="form-control">
+                                <p class="form-text text-danger">{{erNgayKetThuc}}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Số Lượng</label>
+                                <input type="number" ng-model="soLuong" class="form-control">
+                                <p class="form-text text-danger">{{erSoLuong}}</p>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" ng-click="create()" class="btn btn-danger">Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!--        edit-->
+        <div class="modal" id="editVoucher">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Mã Voucher</label>
+                                <input type="text" ng-model="ma" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tên Voucher</label>
+                                <input type="text" ng-model="ten" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Loại Giảm</label>
+                                <input type="text" ng-model="loai" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mức Giảm</label>
+                                <input type="text" ng-model="mucGiam" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mức Giảm Tối Đa</label>
+                                <input type="text" id="mucGiamToiDa1" ng-model="mucGiamToiDa" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Giá Trị Tối Thiểu</label>
+                                <input type="text" ng-model="giaTriToiThieu" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ngày Bắt Đầu</label>
+                                <input type="date" ng-model="ngayBatDau" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ngày Kết Thúc</label>
+                                <input type="date" ng-model="ngayKetThuc" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Số Lượng</label>
+                                <input type="text" ng-model="soLuong" class="form-control">
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" ng-click="update(ma)" class="btn btn-danger">Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script></script>
+</html>

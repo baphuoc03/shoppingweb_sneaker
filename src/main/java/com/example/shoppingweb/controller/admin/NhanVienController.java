@@ -11,4 +11,8 @@ public class NhanVienController {
     public String getNhanVienView(){
         return "admin/NhanVien";
     }
+    @GetMapping("thong-tin-ca-nhan")
+    public String getUserDetail(){
+        return "admin/thongTinUser";
+    }
 }

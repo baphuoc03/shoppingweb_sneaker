@@ -24,6 +24,14 @@ public class SizeServiceImpl implements ISizeService {
     }
 
     @Override
+    public List<SizeDTOResponse> getByChieuDai(Float chieuDai) {
+        return sizeRepository.findAll().stream()
+                .filter(m -> Float.compare(m.getChieuDai(),chieuDai)==0)
+                .map(m -> new SizeDTOResponse(m))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public SizeDTOResponse save(SizeDTORequest sizeDTORequest) {
         SizeModel model = sizeRepository.save(sizeDTORequest.mapToModel());
         return new SizeDTOResponse(model);
@@ -42,6 +50,7 @@ public class SizeServiceImpl implements ISizeService {
 
     @Override
     public void deleteById(Float s) {
+        System.out.println(s);
         sizeRepository.deleteById(s);
     }
 

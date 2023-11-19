@@ -1,4 +1,4 @@
-package com.example.shoppingweb.interceptor;
+package fpoly.duantotnghiep.shoppingweb.interceptor;
 
 public class test {
 }

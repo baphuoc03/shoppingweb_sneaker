@@ -51,6 +51,9 @@ public class ChiTietSanPhamModel {
     @OneToMany(mappedBy = "chiTietSanPham",fetch = FetchType.EAGER)
     private List<ChiTietDonHangModel> chiTietDonHangList;
 
+    public ChiTietSanPhamModel(String sanPham) {
+    }
+
     public Boolean kiemTraCoTrongDonHang(){
         if(chiTietDonHangList.size()==0)return false;
         else return true;

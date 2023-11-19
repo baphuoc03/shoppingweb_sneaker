@@ -1,6 +1,8 @@
 package com.example.shoppingweb.dto.reponse;
 
+
 import com.example.shoppingweb.model.KieuDangModel;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

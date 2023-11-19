@@ -1,10 +1,11 @@
 package com.example.shoppingweb.model;
-
+import fpoly.duantotnghiep.shoppingweb.enumtype.KhuyenMaiType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -30,18 +31,22 @@ public class VoucherModel {
     private Double mucGiam;
 
     @Column(name = "giatritoithieu")
-    private BigDecimal giaTriToiThieu;
-    @Temporal(TemporalType.TIMESTAMP)
+    private Double giaTriToiThieu;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "ngaybatdau")
     private Date ngayBatDau;
-    @Temporal(TemporalType.TIMESTAMP)
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "ngayketthuc")
     private Date ngayKetThuc;
 
     @Column(name = "soluong")
-    private Long soLuong;
+    private int soLuong;
 
     @Column(name = "mucgiamtoida")
-    private Long mucGiamToiDa;
+    private Double mucGiamToiDa;
 
 }

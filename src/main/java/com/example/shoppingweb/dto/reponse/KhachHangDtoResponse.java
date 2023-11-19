@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class KhachHangDtoResponse {
 
     private String username;
+    private String password;
     private String hoVaTen;
     private String gioiTinh;
     private LocalDate ngaySinh;
@@ -21,8 +22,11 @@ public class KhachHangDtoResponse {
 
     public KhachHangDtoResponse(KhachHangModel model) {
         this.username = model.getUsername();
+        this.password = model.getPassword();
         this.hoVaTen = model.getHoVaTen();
-        this.gioiTinh = model.getGioiTinh() == true ? "Nam" : "Nữ";
+        if(gioiTinh != null && gioiTinh.isBlank()){
+            this.gioiTinh = model.getGioiTinh() == true ? "Nam" : "Nữ";
+        }
         this.ngaySinh = model.getNgaySinh();
         this.soDienThoai = model.getSoDienThoai();
         this.email = model.getEmail();

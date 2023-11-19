@@ -1,4 +1,4 @@
-package com.example.shoppingweb.throwexception;
+package fpoly.duantotnghiep.shoppingweb.throwexception;
 
 public class test {
 }

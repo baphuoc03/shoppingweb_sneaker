@@ -3,11 +3,9 @@ package com.example.shoppingweb.restcontroller.admin;
 import com.example.shoppingweb.dto.reponse.KhachHangDtoResponse;
 import com.example.shoppingweb.service.IKhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +18,9 @@ public class KhachHangRestcontroller {
 
 
     @GetMapping("get-all-khach-hang")
-    public ResponseEntity<List<KhachHangDtoResponse>> getAllKhachHang(){
-        return ResponseEntity.ok(taiKhoanService.getAll());
+    public ResponseEntity<Page<KhachHangDtoResponse>> getAllKhachHang(@RequestParam(defaultValue = "0")Integer page,
+                                                                      @RequestParam(defaultValue = "8")Integer limit){
+        return ResponseEntity.ok(taiKhoanService.getAll(page, limit));
     }
 
     @GetMapping("detail/{id}")

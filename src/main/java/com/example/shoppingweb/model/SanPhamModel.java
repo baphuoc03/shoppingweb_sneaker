@@ -1,11 +1,11 @@
 package com.example.shoppingweb.model;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
@@ -33,6 +33,10 @@ public class SanPhamModel {
     private DongSanPhamModel dongSanPham;
 
     @ManyToOne
+    @JoinColumn(name = "xuatxu")
+    private XuatXuModel xuatXu;
+
+    @ManyToOne
     @JoinColumn(name = "kieudang")
     private KieuDangModel kieuDang;
 
@@ -44,7 +48,7 @@ public class SanPhamModel {
     private String ten;
 
     @Column(name = "gianhap")
-    private BigDecimal giaNhap;
+    private BigDecimal giaNiemYet;
 
     @Column(name = "giaban")
     private BigDecimal giaBan;
@@ -66,6 +70,10 @@ public class SanPhamModel {
     @Column(name = "trangthai")
     private Boolean trangThai;
 
+//    @Transient
+    @Formula("(SELECT SUM(c.soluong) FROM chitietsanpham c WHERE c.sanpham = ma)")
+    private Long soLuong;
+
     @OneToMany(mappedBy = "sanPham", fetch = FetchType.EAGER)
     private List<AnhModel> Images;
 
@@ -77,8 +85,14 @@ public class SanPhamModel {
 
     public Long getSoLuongSanPham() {
         if (ctsp == null) return 0L;
-        return ctsp.stream().map(c -> c.getSoLuong()).reduce(0L, (c1, c2) -> c1 + c2);
+        return ctsp.stream().filter(c -> c.getTrangThai()==true).map(c -> c.getSoLuong()).reduce(0L, (c1, c2) -> c1 + c2);
     }
+
+//    public Long getSoLuong() {
+//        if (ctsp == null) return 0L;
+//        return ctsp.stream().filter(c -> c.getTrangThai()==true).map(c -> c.getSoLuong()).reduce(0L, (c1, c2) -> c1 + c2);
+//
+//    }
 
     @Override
     public String toString() {
@@ -86,7 +100,7 @@ public class SanPhamModel {
                 "ma='" + ma + '\'' +
                 ", mauSac=" + mauSac.getTen() +
                 ", ten='" + ten + '\'' +
-                ", giaNhap=" + giaNhap +
+                ", giaNhap=" + giaNiemYet +
                 ", giaBan=" + giaBan +
                 ", moTa='" + moTa + '\'' +
                 ", ngayTao=" + ngayTao +
@@ -97,4 +111,6 @@ public class SanPhamModel {
                 ", ctsp=" + ctsp +
                 '}';
     }
+
+    public SanPhamModel(String ma){ this.ma = ma;}
 }

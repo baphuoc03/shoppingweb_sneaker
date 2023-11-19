@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/user/trangChu}">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanh toán</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+
+        .coupon .kanan {
+            border-left: 1px dashed #717fe0;
+            width: 40% !important;
+            position: relative;
+        }
+
+        .coupon .kanan .info::after,
+        .coupon .kanan .info::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #dedede;
+            border-radius: 100%;
+        }
+
+        .coupon .kanan .info::before {
+            top: -10px;
+            left: -10px;
+        }
+
+        .coupon .kanan .info::after {
+            bottom: -10px;
+            left: -10px;
+        }
+
+        .coupon .time {
+            font-size: 1.6rem;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="contentUser" class="bg0 m-t-10 p-b-140" ng-app="checkOut" ng-controller="checkOutCtrl" style="background-color: #f9f9fa">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <div class="container" style="margin-top: 40px;margin-bottom: 20px; box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);border: 2px solid transparent; background-color: #fff;">
+        <div class="row">
+            <div class="col-6" style="border-right: 1px solid silver;">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 style="margin-bottom: 10px;">Thông tin vận chuyển</h3>
+                    </div>
+                    <div class="col-6 flex-r" ng-if="loginIn">
+                        <p style="margin-bottom: 10px;">
+                            <a href="/dang-nhap" data-bs-toggle="modal" data-bs-target="#myModalDiaChi">Chọn địa chỉ có
+                                sẵn</a>
+                        </p>
+                    </div>
+                    <div class="col-6 flex-r" ng-if="!loginIn">
+                        <p style="margin-bottom: 10px;">
+                            Bạn đã có tài khoản?
+                            <a ng-click="login()" href="/dang-nhap">Đăng nhập</a>
+                        </p>
+                    </div>
+                </div>
+                <form class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control rounded-4" name="boGoc"
+                               ng-model="nguoiNhan"
+                               placeholder="Người nhận" id="inputEmail4">
+                        <p class="form-text text-danger">{{errNguoiNhan}}</p>
+
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" placeholder="Số điện thoại"
+                               ng-model="soDienThoai"
+                               name="boGoc"
+
+                               class="form-control  rounded-4"
+                               id="inputPassword4">
+                        <p class="form-text text-danger">{{errSoDienThoai}}</p>
+                    </div>
+                    <div class="col-12">
+                        <input type="text"
+
+                               ng-model="email"
+                               name="boGoc"
+                               class="form-control  rounded-4"
+                               id="inputAddress" placeholder="Mail">
+                        <p class="form-text text-danger">{{errEmail}}</p>
+
+                    </div>
+                    <div class="col-12">
+                        <input type="text" ng-model="diaChiChiTiet" name="boGoc" class="form-control rounded-4"
+                               id="inputAddress2"
+                               placeholder="Địa chỉ: ví dụ(193 Phú Diễn)">
+                        <p class="form-text text-danger">{{errDiaChiChiTiet}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <select title="Country" id="city" ng-model="thanhPhoCode"
+                                onchange="angular.element(this).scope().cityChange(this.value)"
+                                class="form-select  rounded-4">
+                            <option selected>Tỉnh/thành phố</option>
+                            <option ng-repeat="c in citys" value="{{c.ProvinceID}}">
+                                {{c.ProvinceName}}
+                            </option>
+                        </select>
+                        <p class="form-text text-danger">{{errThanhPhoCode}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="district" data-placeholder="Quận huyện"
+                                ng-model="quanHuyenCode"
+                                onchange="angular.element(this).scope().districtChange(this.value)"
+                                title="Country"
+                                class="form-select rounded-4">
+                            <option selected>Quận/huyện</option>
+                            <option ng-repeat="d in districts"
+                                    value="{{d.DistrictID}}">{{d.DistrictName}}
+                            </option>
+                        </select>
+                        <p class="form-text text-danger">{{errQuanHuyenCode}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <select title="Country" id="ward" ng-model="xaPhuongCode"
+                                onchange="angular.element(this).scope().getFeeShipped(getElementById('district').value,this.value)"
+                                class="form-select  rounded-4">
+                            <option selected>Xã/phường</option>
+                            <option ng-repeat="w in wards" value="{{w.WardCode}}">
+                                {{w.WardName}}
+                            </option>
+                        </select>
+                        <p class="form-text text-danger">{{errXaPhuongCode}}</p>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" class="form-control rounded-4" placeholder="Ghi chú: ">
+                    </div>
+                    <div class="col-md-12 ml-3">
+                        <input type="checkbox" ng-model="isSelectSaveDC" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Lưu địa chỉ cho lần sau</label>
+                    </div>
+                </form>
+
+                <h3 style="margin-bottom: 30px; margin-top: 30px;">Phương thức thanh toán</h3>
+                <div class="rounded-4 p-3 border" style="margin-bottom: 10px; margin-top: 30px; border-radius: 25px">
+
+                    <p class="form-text text-danger">{{errThanhToan}}</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="khiNhanHang"
+                               value="0" ng-model="phuongThucThanhToan">
+                        <label class="form-check-label" for="khiNhanHang">
+                            Thanh toán khi nhận hàng
+                        </label>
+                    </div>
+                </div>
+                <div class="rounded-4 p-3 border" style="border-radius: 25px">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="online"
+                               value="1"
+                               ng-model="phuongThucThanhToan">
+                        <label class="form-check-label" for="online">
+                            <img alt="" style="width: 100px;" src="/userStyle/images/icons/Logo-VNPAY-QR-768x143.webp">
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <!--            giỏ hàng check out-->
+            <div class="col-6">
+                <h3 style="margin-bottom: 10px;">Đơn hàng</h3>
+                <table class="table table-striped mt-2">
+                    <tbody>
+                    <tr ng-repeat="i in cart">
+                        <th scope="row">
+                            <img style="width: 100px; height: 100px" src="/image/loadImage/product/{{i.anh}}"
+                                 alt="product-img"
+                                 title="product-img" class="avatar-md"/>
+                        </th>
+                        <td>{{i.tenSanPham}}
+                            <p>_size:{{i.size}}</p>
+                        </td>
+                        <td>
+                            <p>{{i.soLuong}}</p>
+                        </td>
+
+                        <td>{{i.donGiaSauGiam | currency: "" : 1}}đ</td>
+                        <td>{{i.donGiaSauGiam * i.soLuong | currency: "" : 1}}đ</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+                <br>
+                <div class="container">
+                    <div class="row" style="background-color:#717fe0; height: 50px;">
+                        <div class="col-4" style="margin-top: 18px;">
+                            <h6 style="color: aliceblue;"><b>Voucher</b></h6>
+                        </div>
+                        <div class="col-4 " style="margin-top: 15px;">
+                            <!--                            <p class="blinking-text" style="color: aliceblue;">3 voucher có thể áp dụng</p>-->
+                        </div>
+                        <div class="col-4 flex-r" style="margin-top: 15px;color: aliceblue;">
+                            <a href="#"
+                               style="color: white"
+                               data-bs-toggle="modal"
+                               data-bs-target="#myModal">Chọn Voucher</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6><b>Tiền hàng:</b></h6>
+                        </div>
+                        <div class="col-6 flex-r">{{sumTotal | currency: "" : 1}}đ</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6><b>Tiền ship:</b></h6>
+                        </div>
+                        <div class="col-6 flex-r">{{feeShipped | currency: "" : 1}}đ</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6><b>Giảm giá:</b></h6>
+                        </div>
+                        <div class="col-6 flex-r">{{giaGiam | currency: "" : 1}}đ</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6><b>Tổng hóa đơn:</b></h6>
+                        </div>
+                        <div class="col-6 flex-r">{{totalpayment() | currency: "" : 1}}đ</div>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-6">
+                            <button
+                                    class="flex-c-m stext-80 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                <a href="/gio-hang"></a> Quay lại giỏ hàng
+                            </button>
+                        </div>
+                        <div class="col-6 flex-r">
+                            <button ng-click="create()"
+                                    class="flex-c-m stext-80 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                Thanh toán
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    modal diaChi-->
+    <div class="modal" id="myModalDiaChi">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header ">
+                    <h4 class="modal-title">Địa chỉ</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="height: 370px">
+                    <div class="container-fluid row" ng-repeat="dc in diaChiByTaiKhoan">
+                        <div class="col-9">
+                            <p>
+                                {{dc.diaChiChiTiet}} <br>
+                                {{dc.xaPhuongName}}, {{dc.quanHuyenName}}, {{dc.thanhPhoName}}
+                            </p>
+                        </div>
+                        <div class="col-3 flex-r">
+                            <a href="#" style="text-decoration: none; " data-bs-dismiss="modal"
+                               ng-click="getDiaChiById(dc.id)">Chọn</a>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    modal voucher-->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Chọn Voucher</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="background-color: #dedede; height: 370px">
+                    <div class="row m-t-5">
+                        <div class="input-group">
+                            <input type="search" class="form-control m-l-15" style="width: 100px; height: 40px"
+                                   ng-model="maVCC" placeholder="Search" aria-label="Search"
+                                   aria-describedby="search-addon"/>
+                            <span class="input-group-text" style="background-color: #dedede" id="search-addon">
+                               <i class="bi bi-search" ng-click="searchVC()"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 m-t-20" ng-if="searchVoucher === true">
+                        <div class="coupon bg-white rounded mb-3 d-flex justify-content-between">
+                            <div class="kiri p-3">
+                                <div class="icon-container ">
+                                    <div class="icon-container_box">
+                                        <img src="data:image/png;base64,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"
+                                             width="85" alt="totoprayogo.com" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tengah py-3 d-flex w-100 justify-content-start">
+                                <div>
+                                    <span class="badge badge-success">Valid</span>
+                                    <h3 class="lead">{{voucherS.ma}}</h3>
+                                    <p class="text-muted mb-0">
+                                        Giảm giá {{voucherS.mucGiam | currency: "" : 1}} Cho đơn hàng trên
+                                        {{voucherS.giaTriToiThieu | currency: "" : 1}}đ
+                                    </p>
+                                    <input ng-model="voucher" name="voucher" value="{{voucherS.ma}}"
+                                           class="form-check-input" type="hidden">
+                                    <p class="text-muted mb-0">
+                                        HSD: {{voucherS.ngayKetThuc}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="kanan">
+                                <div class="info m-3 d-flex align-items-center">
+                                    <div class="w-100">
+                                        <div class="block">
+                            <span class="time font-weight-light">
+                                <span style="font-size: 10pt">Còn {{voucherS.soLuong}}</span>
+                            </span>
+                                        </div>
+                                        <a target="_blank" ng-click="getDataAPI(v.ma)"
+                                           ng-disabled="isDisabledVC(voucherS)"
+                                           class="btn btn-sm btn-outline-danger btn-block"
+                                           data-bs-dismiss="modal">
+                                            Sử dụng
+                                        </a>
+
+                                        <!--                                        <a target="_blank" ng-click="getDataAPI(v.ma)" ng-if="disVoucher === true"-->
+                                        <!--                                           class="btn btn-sm btn-outline-danger btn-block disabled"-->
+                                        <!--                                           data-bs-dismiss="modal">-->
+                                        <!--                                            Sử dụng-->
+                                        <!--                                        </a>-->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 m-t-20" ng-repeat="v in vouchers" ng-if="searchVoucher === false">
+                        <div class="coupon bg-white rounded mb-3 d-flex justify-content-between">
+                            <div class="kiri p-3">
+                                <div class="icon-container ">
+                                    <div class="icon-container_box">
+                                        <img src="data:image/png;base64,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"
+                                             width="85" alt="totoprayogo.com" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tengah py-3 d-flex w-100 justify-content-start">
+                                <div>
+                                    <span class="badge badge-success">Valid</span>
+                                    <h3 class="lead">{{v.ma}}</h3>
+                                    <p class="text-muted mb-0">
+                                        Giảm giá {{v.mucGiam | currency: "" : 1}} Cho đơn hàng trên
+                                        {{v.giaTriToiThieu | currency: "" : 1}}đ
+                                    </p>
+                                    <input ng-model="voucher" name="voucher" value="{{v.ma}}"
+                                           class="form-check-input" type="hidden">
+                                    <p class="text-muted mb-0">
+                                        HSD: {{v.ngayKetThuc}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="kanan">
+                                <div class="info m-3 d-flex align-items-center">
+                                    <div class="w-100">
+                                        <div class="block">
+                                            <span class="time font-weight-light">
+                                                <span style="font-size: 10pt">Còn {{v.soLuong}}</span>
+                                            </span>
+                                        </div>
+                                        <a target="_blank" ng-click="getDataAPI(v.ma)"
+                                           ng-if="v.giaTriToiThieu <= sumTotal"
+                                           class="btn btn-sm btn-outline-danger btn-block"
+                                           data-bs-dismiss="modal">
+                                            Sử dụng
+                                        </a>
+
+                                        <a target="_blank" ng-click="getDataAPI(v.ma)"
+                                           ng-if="v.giaTriToiThieu > sumTotal"
+                                           class="btn btn-sm btn-outline-danger btn-block disabled"
+                                           data-bs-dismiss="modal">
+                                            Sử dụng
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    Xác nhận-->
+
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.example.shoppingweb.repository;
 
+
 import com.example.shoppingweb.model.SizeModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,5 +1,4 @@
 package com.example.shoppingweb.model;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

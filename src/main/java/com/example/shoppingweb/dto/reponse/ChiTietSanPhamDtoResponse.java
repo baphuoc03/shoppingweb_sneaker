@@ -1,5 +1,4 @@
 package com.example.shoppingweb.dto.reponse;
-
 import com.example.shoppingweb.model.ChiTietSanPhamModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +13,13 @@ public class ChiTietSanPhamDtoResponse {
     private String sanPham;
     private Float size;
     private Long soLuong;
+    private SanPhamDtoResponse sanPhamDTO;
 
     public ChiTietSanPhamDtoResponse(ChiTietSanPhamModel model) {
         id = model.getId();
         sanPham = model.getSanPham().getTen();
         size = model.getSize().getMa();
         soLuong = model.getSoLuong();
+        sanPhamDTO = new SanPhamDtoResponse(model.getSanPham());
     }
 }

@@ -1,5 +1,4 @@
 package com.example.shoppingweb.model;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +22,7 @@ public class ChiTietDonHangModel {
 
     @ManyToOne
     @JoinColumn(name = "donhang")
+    @ToString.Exclude
     private DonHangModel donHang;
 
     @ManyToOne

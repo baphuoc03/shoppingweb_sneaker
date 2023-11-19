@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TrangChuController {
     @GetMapping("")
     public String show(){
-        return "/admin/index";
+        return "admin/thongke/tongQuat";
     }
 }

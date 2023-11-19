@@ -1,5 +1,4 @@
 package com.example.shoppingweb.model;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,13 +46,17 @@ public class KhachHangModel {
     private List<DiaChiModel> danhSachDiaChi;
 
     @OneToMany(mappedBy = "nguoiSoHuu",fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<DonHangModel> danhSachDonHang;
+
 
 //    @ManyToMany
 //    @JoinTable(name = "voucher_taikhoan",
 //            joinColumns = { @JoinColumn(name = "voucher") },
 //            inverseJoinColumns = { @JoinColumn(name = "taikhoan") })
 //    private Set<VoucherModel> vouchers;
-
+    public KhachHangModel(String username){
+        this.username = username;
+    }
 
 }

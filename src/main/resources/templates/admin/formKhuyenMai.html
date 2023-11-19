@@ -85,11 +85,14 @@
                                             <label for="productname">Tên Khuyến Mại</label>
                                             <input th:field="*{ten}" id="productname" name="productname" type="text"
                                                    class="form-control">
+                                            <div id="emailHelp" class="form-text" style="color: red"
+                                                 th:if="${#fields.hasErrors('ten')}"
+                                                 th:errors="*{ten}"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="control-label">Loại Giảm</label>
                                             <select th:field="*{loai}" class="form-control select2">
-<!--                                                <option>Select</option>-->
+                                                <!--                                                <option>Select</option>-->
                                                 <option value="PHAN TRAM">Phần Trăm</option>
                                                 <option value="TIEN">Tiền</option>
                                             </select>
@@ -99,6 +102,9 @@
                                             <input th:field="*{mucGiam}" id="manufacturername" name="manufacturername"
                                                    type="text"
                                                    class="form-control">
+                                            <div id="emailHelp" class="form-text" style="color: red"
+                                                 th:if="${#fields.hasErrors('mucGiam')}"
+                                                 th:errors="*{mucGiam}"></div>
                                         </div>
                                     </div>
 
@@ -106,12 +112,18 @@
                                         <div class="mb-3">
                                             <label class="control-label">Ngày Bắt Đầu</label>
                                             <input th:field="*{ngayBatDau}" type="date" class="form-control">
+                                            <div id="emailHelp" class="form-text" style="color: red"
+                                                 th:if="${#fields.hasErrors('ngayBatDau')}"
+                                                 th:errors="*{ngayBatDau}"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="control-label">Ngày Kết Thúc</label>
                                             <input th:field="*{ngayKetThuc}" id="manufacturername"
                                                    name="manufacturername" type="date"
                                                    class="form-control">
+                                            <div id="emailHelp" class="form-text" style="color: red"
+                                                 th:if="${#fields.hasErrors('ngayKetThuc')}"
+                                                 th:errors="*{ngayKetThuc}"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="control-label">Trạng Thái</label>
@@ -145,27 +157,21 @@
                                     <tr>
                                         <th></th>
                                         <th>Tên</th>
-                                        <th>Danh Mục</th>
-                                        <th>Màu</th>
-                                        <th>Chất Liệu</th>
-                                        <th>Giá Nhập</th>
+                                        <th>Giá Niêm</th>
                                         <th>Giá Bán</th>
-                                        <th>Số Lượng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="sp : ${sanPham}">
 
-                                        <td >
-                                            <input th:checked="${#lists.contains(sp1, sp.ma)}" type="checkbox" name="ids" th:value="${sp.ma}">
+                                        <td>
+                                            <input name="ids" th:value="${sp.ma}" type="checkbox"
+                                                   th:checked="${#lists.contains(sanPhamOn, sp.ma)}"
+                                                   th:disabled="${#lists.contains(sanPhamKhuyenMai, sp.ma)}">
                                         </td>
                                         <td th:text="${sp.ten}"></td>
-                                        <td>Danh muc</td>
-                                        <td>Màu mè</td>
-                                        <td>Chat lieu</td>
-                                        <td th:text="${sp.giaNhap}"></td>
+                                        <td th:text="${sp.giaNiemYet}"></td>
                                         <td th:text="${sp.giaBan}"></td>
-                                        <td></td>
                                     </tr>
                                     </tbody>
                                 </table>

@@ -1,11 +1,12 @@
 package com.example.shoppingweb.model;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,4 +27,13 @@ public class DanhSachYeuThichModel {
     @ManyToOne
     @JoinColumn(name = "sanpham")
     private SanPhamModel sanPham;
+
+    @Override
+    public String toString() {
+        return "DanhSachYeuThichModel{" +
+                "id='" + id + '\'' +
+                ", nguoiSoHuu=" + nguoiSoHuu +
+                ", sanPham=" + sanPham +
+                '}';
+    }
 }

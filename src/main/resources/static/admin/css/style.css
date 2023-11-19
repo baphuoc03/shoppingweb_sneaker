@@ -6,7 +6,10 @@
 /* ==========
    1.BASIC
    ========== */
-
+.er {
+    color: red;
+    font-size: 13px;
+}
 html {
     scroll-behavior: smooth;
 }

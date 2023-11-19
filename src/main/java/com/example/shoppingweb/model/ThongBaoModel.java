@@ -1,6 +1,5 @@
 package com.example.shoppingweb.model;
-
-import com.example.shoppingweb.enumtype.ThongBaoType;
+import fpoly.duantotnghiep.shoppingweb.enumtype.ThongBaoType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

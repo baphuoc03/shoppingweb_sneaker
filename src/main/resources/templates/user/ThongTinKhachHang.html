@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/user/trangChu}">
+<head>
+    <meta charset="UTF-8">
+    <title>Sản phẩm chi tiết</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+<div style="margin-top: 10px" class="main-content" ng-app="ctsp-app" ng-controller="ctsp-ctrl" layout:fragment="contentUser">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Product Detail -->
+    <section class="sec-product-detail bg0 p-t-65 p-b-60">
+        <div class="container">
+            <div class=" m-t-50 p-t-43 p-b-40">
+                <!-- Tab01 -->
+                <div class="tab01">
+                    <!-- Nav tabs -->
+                    <h1> Thông tin của tôi</h1>
+                    <!-- Tab panes -->
+                    <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Tên đăng nhâp</label>
+                        <div class="col-sm-3">
+                            <input type="password" class="form-control" id="inputPassword">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Tên</label>
+                        <div class="col-sm-3">
+                            <input type="password" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-3">
+                            <input type="password" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Giới Tính</label>
+                        <div class="col-sm-3">
+                            <input type="password" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Ngày Sinh</label>
+                        <div class="col-sm-3">
+                            <input type="password" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Số điện thoại</label>
+                        <div class="col-sm-3">
+                            <input type="password" class="form-control" >
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary ">Lưu</button>
+                </div>
+
+        <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
+			<span class="stext-107 cl6 p-lr-25">
+				SKU: JAK-01
+			</span>
+
+            <span class="stext-107 cl6 p-lr-25">
+				Categories: Jacket, Men
+			</span>
+        </div>
+    </section>
+</div>
+</body>
+</html>

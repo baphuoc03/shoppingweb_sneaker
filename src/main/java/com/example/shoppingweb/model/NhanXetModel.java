@@ -1,9 +1,9 @@
 package com.example.shoppingweb.model;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
@@ -37,6 +37,7 @@ public class NhanXetModel {
     private String noiDung;
 
     @Column(name = "thoigian")
+    @CreationTimestamp
     private Date thoiGian;
 
 }
